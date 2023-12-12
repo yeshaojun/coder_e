@@ -1,0 +1,33 @@
+{
+    "name": "coderE",
+    "description": "程序员的英语学习工具",
+    "version": "0.0.1",
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; object-src 'self'",
+    "manifest_version": 2,
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "tabs"
+    ],
+    "browser_action": {
+        "default_popup": "popup/index.html",
+        "default_icon": "icon.png"
+    },
+    "background": {
+        "scripts": [
+            "background/background.js" 
+        ]
+    },
+    "content_scripts": [
+        {
+          "all_frames": false,
+          "js": [
+            "scripts/content.js"
+          ],
+          "css": ["css/index.css"],
+          "matches": ["<all_urls>"],
+          "run_at": "document_start"
+        }
+      ],
+      "web_accessible_resources": ["*.html", "*.js", "*.css"]
+}

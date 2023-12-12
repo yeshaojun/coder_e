@@ -1,0 +1,10 @@
+body {
+    width: 400px;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}

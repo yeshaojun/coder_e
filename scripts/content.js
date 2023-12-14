@@ -1,22 +1,23 @@
 (document.onload = () => {
-  console.log("111");
   let time, left, top;
   let element = document.querySelector(".coder_e_transform_tip");
+  let showel = document.querySelector(".coder_e_transform_result");
   document.addEventListener("mouseup", (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log("e", e.target);
     if (
       e.target.classList.contains("coder_e_transform_tip") ||
       e.target.classList.contains("coder_e_transform_result")
     ) {
-      console.log("e111", e.target);
       return;
     }
     clearTimeout(time);
     time = setTimeout(() => {
       createTip();
     }, 500);
+  });
+
+  document.addEventListener("mouseup", () => {
+    element && (element.style.display = "none");
+    showel && (showel.style.display = "none");
   });
 
   function createTip() {
@@ -49,23 +50,17 @@
     };
   }
 
-  document.addEventListener("mouseup", () => {
-    element && (element.style.display = "none");
-  });
-
   function showResult(result) {
-    console.log("result", result);
-    let el = document.querySelector(".coder_e_transform_result");
-    if (!el) {
-      el = document.createElement("div");
-      el.classList.add("coder_e_transform_result");
-      document.body.appendChild(el);
+    if (!showel) {
+      showel = document.createElement("div");
+      showel.classList.add("coder_e_transform_result");
+      document.body.appendChild(showel);
     }
     console.log("left11111", left, top);
-    el.style.display = "block";
-    el.style.left = left - result?.length + "px";
-    el.style.top = top + "px";
-    el.innerHTML = result;
+    showel.style.display = "block";
+    showel.style.left = left - result?.length + "px";
+    showel.style.top = top + "px";
+    showel.innerHTML = result;
   }
 
   function listenClick() {

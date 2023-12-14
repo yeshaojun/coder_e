@@ -1,9 +1,16 @@
 body {
     width: 400px;
+    font-size: 14px;
 }
 
 .mt-2 {
     margin-top: 8px;
+}
+.ml-2 {
+    margin-left: 8px;
+}
+.mb-2 {
+    margin-bottom: 8px;
 }
 .cursor-pointer {
     cursor: pointer;

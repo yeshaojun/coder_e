@@ -12,5 +12,9 @@ export default defineConfig({
   base: "./",
   build: {
     outDir: "../popup",
+    watch: {},
+  },
+  server: {
+    hmr: true,
   },
 });

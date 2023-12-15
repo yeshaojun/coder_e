@@ -45,10 +45,12 @@
         <el-tooltip
           class="box-item"
           effect="dark"
-          content="添加到生词本"
+          content="添加到默认生词本"
           placement="top-start"
         >
-          <el-icon class="cursor-pointer" :size="24"><CirclePlus /></el-icon>
+          <el-icon class="cursor-pointer" @click="addStore" :size="24"
+            ><CirclePlus
+          /></el-icon>
         </el-tooltip>
       </el-space>
     </div>
@@ -57,7 +59,10 @@
 </template>
 <script setup lang="ts">
 import { Microphone, CirclePlus } from "@element-plus/icons-vue";
-import { ref, onMounted } from "vue";
+import { getStorage } from "../utils/storage";
+import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import { API_URL } from "../../config/index";
 const textarea = ref("");
 
 const loading = ref(false);
@@ -68,6 +73,7 @@ const result = ref<{
   web?: { key: string; value: string[] }[];
   tSpeakUrl: string;
   speakUrl: string;
+  basic?: any;
 }>({ translation: [], query: "", tSpeakUrl: "", speakUrl: "" });
 
 function handle() {
@@ -75,7 +81,7 @@ function handle() {
     return;
   }
   loading.value = true;
-  fetch("https://api.yeshaojun.com/v1/translate/text?text=" + textarea.value)
+  fetch(API_URL + "?text=" + textarea.value)
     .then((response) => response.json())
     .then((json) => {
       result.value = json as any;
@@ -84,9 +90,6 @@ function handle() {
 }
 
 function paly(type = "origin") {
-  if (type === "origin") {
-  } else {
-  }
   let url = type === "origin" ? result.value.speakUrl : result.value.tSpeakUrl;
   if (audioDom.value) {
     audioDom.value.currentTime = 0;
@@ -98,6 +101,30 @@ function paly(type = "origin") {
 function openDict() {
   // @ts-ignore
   chrome.tabs.create({ url: result.value.webdict.url });
+}
+
+async function addStore() {
+  const storage = getStorage()();
+  const r = await storage.get({
+    defaultStore: "coder_e_1",
+  });
+  const name = r.defaultStore;
+  const s = await storage.get({
+    [name]: [],
+  });
+  const list = s[name];
+  list.unshift({
+    query: result.value.query,
+    translation: result.value?.basic
+      ? result.value?.basic.explains[0]
+      : result.value.translation[0],
+    speakUrl: result.value.speakUrl,
+    tSpeakUrl: result.value.tSpeakUrl,
+  });
+  await storage.set({
+    [name]: list,
+  });
+  ElMessage.success("success");
 }
 </script>
 <style scoped>

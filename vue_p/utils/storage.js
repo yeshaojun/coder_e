@@ -1,5 +1,5 @@
 class Storage {
-  async get(name) {
+  get(name) {
     return new Promise((resolve) => {
       chrome.storage.sync.get(name, (result) => {
         resolve(result);
@@ -11,6 +11,15 @@ class Storage {
     return new Promise((resolve) => {
       chrome.storage.sync.set(info, () => {
         console.log("set success");
+        resolve(true);
+      });
+    });
+  }
+
+  remove(info) {
+    return new Promise((resolve) => {
+      chrome.storage.sync.remove(info, () => {
+        console.log("remove success");
         resolve(true);
       });
     });

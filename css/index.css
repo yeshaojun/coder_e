@@ -12,9 +12,26 @@
 .coder_e_transform_result {
     position: absolute;
     display: none;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0,0,0, 0.8);
     color: #fff;
     z-index: 9999;
     padding: 20px;
     border-radius: 5px;
+    max-width: 300px;
+
+}
+
+.coder_e_transform_result-title {
+    font-size: 14px;
+}
+
+.coder_e_transform_result_audio {
+    display: none;
+}
+.coder_e_transform_result-content {
+    margin-top: 15px;
+    display: flex;
+}
+.coder_e_transform_result_play {
+    margin-right: 15px;
 }

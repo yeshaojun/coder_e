@@ -1,101 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>弹幕测试</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .danmu {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 20px;
+      color: #000;
+      animation: moveRight 5s linear infinite;
+    }
+
+    @keyframes moveRight {
+      from {
+        transform: translateX(100vw);
       }
-
-
-      /* 必须要设置弹幕容器的宽高 */
-      .screen {
-        /* width: 100vw; */
-        /* height: 100%; */
-        height: 100vh;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        overflow: hidden;
-        /* width: 100vw; */
+      to {
+        transform: translateX(-100%);
       }
+    }
+  </style>
+</head>
+<body>
 
-    </style>
-  </head>
+<div>
+  <label for="speed">弹幕速度（1-10）：</label>
+  <input type="number" id="speed" min="1" max="10" value="5">
+</div>
 
-  <body>
-    <!-- <div id="root">
-      <div class="app">
-        <div class="danmu-content">
-          <div class="screen"></div>
-        </div>
-      </div>
-    </div> -->
-    <div class="screen"></div>
-  </body>
-  <script src="https://unpkg.com/js-bullets@latest/dist/BulletJs.min.js"></script>
+<div class="danmu">Hello, Danmu!</div>
 
-  <script>
-    const danmuList = [
-      '你好科比布莱恩特',
-      '这个老哥的评论说的很对啊，这都能被违规隐藏？是戳痛到某些人了吗。',
-      'rip....',
-      'resepct',
-      '😂❤️😍😒👌☺️☺️😊😭😩😩😔😏😁👍🏿😁😏😏😔💕😭😘😊❤️😍',
-      '圣何塞-穆里尼奥',
-      '泰伦卢，泰伦卢，泰伦卢，泰伦卢',
-      '勒布朗-詹姆斯',
-      'emoji',
-      '湖人阵容也不是特别豪华为什么能打到西部第一？ 由高田大叔 发表在篮球·湿乎乎的话题-说的很对啊，很对啊',
-      '----huhuh---hahahha---',
-      '😂❤️😍😒👌☺️☺️😊😭😩😩😔😏😁👍🏿😁😏😏😔💕😭😘😊❤️😍',
-    ];
+<script>
+  var danmuElement = document.querySelector('.danmu');
+  var speedInput = document.getElementById('speed');
 
-    const getRandom = (min, max) =>
-      parseInt(Math.random() * (max - min + 1)) + min;
+  danmuElement.style.animation = `moveRight ${speedInput.value}s linear infinite`;
 
-    const danmuTest = {
-      screen: null,
-      handler: null,
-      dom: {
-        closeTime: document.querySelector('.close-time'),
-        openTime: document.querySelector('.open-time'),
-        sendDanmu: document.querySelector('#sendDanmu'),
-        dInput: document.querySelector('#d-input'),
-        pauseAll: document.querySelector('#pauseAll'),
-        continueAll: document.querySelector('#continueAll'),
-      },
-      init() {
-        this.eventInit();
-        this.screen = new BulletJs('.screen', {
-          trackHeight: 35,
-          speed: undefined,
-          pauseOnClick: true,
-          pauseOnHover: true,
-        });
-        this.sendDanmu();
-      },
-      sendDanmu() {
-        this.sendAction();
-      },
-      sendAction() {
-        this.handler = setInterval(() => {
-          const index = getRandom(0, 10);
-          const str = danmuList[index];
-          const dom = `<span>${str}</span>`;
-          this.screen.push(dom);
-        }, 1000);
-      },
-    };
-    danmuTest.init();
-  </script>
+  speedInput.addEventListener('input', function() {
+    danmuElement.style.animation = `moveRight ${speedInput.value}s linear infinite`;
+  });
+
+  danmuElement.addEventListener('mouseenter', function () {
+    danmuElement.style.animationPlayState = 'paused';
+  });
+
+  danmuElement.addEventListener('mouseleave', function () {
+    danmuElement.style.animationPlayState = 'running';
+  });
+
+  danmuElement.addEventListener('click', function () {
+    // 鼠标点击时显示额外的内容
+    danmuElement.textContent = "Clicked! Additional Content!";
+  });
+</script>
+
+</body>
 </html>

@@ -35,3 +35,19 @@
 .coder_e_transform_result_play {
     margin-right: 15px;
 }
+
+.screen {
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.screen .coder_e_query {
+    background-color: #111;
+    color: #FFF;
+    padding: 10px;
+    border: 4px;
+}

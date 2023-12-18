@@ -10,7 +10,7 @@
       <SetCom></SetCom>
     </el-tab-pane>
     <el-tab-pane label="资料" name="fourth">
-      <div class="content">Task</div>
+      <LearnCom />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -18,6 +18,7 @@
 import TranslateCom from "./src/translate.vue";
 import StoreCom from "./src/store.vue";
 import SetCom from "./src/set.vue";
+import LearnCom from "./src/learn.vue";
 import { ref, onMounted } from "vue";
 import { getStorage } from "./utils/storage.js";
 const active = ref("translate");

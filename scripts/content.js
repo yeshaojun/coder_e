@@ -12,6 +12,9 @@
       console.log("huhuh");
       return;
     }
+    if (window.getSelection()?.toString().length === 0) {
+      return;
+    }
     clearTimeout(time);
     time = setTimeout(() => {
       createTip();
@@ -41,8 +44,8 @@
     top = obj.top;
     console.log("left", left, top);
     element.style.display = "block";
-    element.style.left = left + "px";
-    element.style.top = top - 20 + "px";
+    element.style.left = left + obj?.width + "px";
+    element.style.top = top - 30 + "px";
   }
 
   function getTextInfo() {
@@ -66,7 +69,7 @@
       e.stopPropagation();
     });
     showel.style.display = "block";
-    showel.style.left = left - result?.length + "px";
+    showel.style.left = left + "px";
     showel.style.top = top + "px";
     showel.innerHTML = `
     <div class="coder_e_transform_result-title">结果：${
@@ -117,23 +120,6 @@
           [defaultStore]: list,
         });
       });
-  }
-
-  async function getStorage(name) {
-    return new Promise((resolve) => {
-      chrome.storage.sync.get(name, (result) => {
-        resolve(result);
-      });
-    });
-  }
-
-  async function setStorage(info) {
-    return new Promise((resolve) => {
-      chrome.storage.sync.set(info, () => {
-        console.log("set success");
-        resolve(true);
-      });
-    });
   }
 
   function listenClick() {

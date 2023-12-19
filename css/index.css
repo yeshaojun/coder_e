@@ -1,48 +1,95 @@
 .coder_e_transform_tip {
-    position: absolute;
-    display: none;
-    background-color: rgba(0,0,0, 0.5);
-    color: #fff;
-    z-index: 9999;
-    padding: 4px 8px;
-    cursor: pointer;
-    border-radius: 2px;
+  position: absolute;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  z-index: 9999;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 2px;
 }
 
 .coder_e_transform_result {
-    position: absolute;
-    display: none;
-    background-color: rgba(0,0,0, 0.8);
-    color: #fff;
-    z-index: 9999;
-    padding: 20px;
-    border-radius: 5px;
-    max-width: 300px;
-
+  position: absolute;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 300px;
 }
 
 .coder_e_transform_result-title {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .coder_e_transform_result_audio {
-    display: none;
+  display: none;
 }
 .coder_e_transform_result-content {
-    margin-top: 15px;
-    display: flex;
+  margin-top: 15px;
+  display: flex;
 }
 .coder_e_transform_result_play {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
-.screen {
-    height: 100%;
+.coder_e_barrage {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  animation: moveRight linear infinite;
+  padding: 20px;
 }
 
-.screen .coder_e_query {
-    background-color: #111;
-    color: #FFF;
-    padding: 10px;
-    border: 4px;
+.coder_e_barrage.paused {
+    background-color: #f2f4fa;
+}
+
+.coder_e_query_mark_minus {
+    margin-top: 10px;
+    background-color: #e57471;
+    color: #fff;
+    padding: 4px;
+    font-size: 14px;
+    border-radius: 4px;
+    display: none;
+}
+
+.coder_e_query_result {
+  margin-top: 10px;
+  display: none;
+  font-size: 12px;
+}
+
+.coder_e_barrage.paused .coder_e_query_mark_minus {
+  display: inline-block;
+}
+.coder_e_barrage.paused .coder_e_query_result  {
+  display: block;
+}
+
+.coder_e_barrage:hover {
+  animation-play-state: paused;
+}
+
+@keyframes moveRight {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.coder_e_query {
+  background-color: #111;
+  color: #fff;
+  padding: 4px;
+  display: inline-block;
+  border-radius: 4px;
+  text-align: center;
 }

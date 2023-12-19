@@ -4,7 +4,7 @@
   let element = document.querySelector(".coder_e_transform_tip");
   let showel = document.querySelector(".coder_e_transform_result");
   let curren_text = "";
-  document.addEventListener("mouseup", (e) => {
+  document.addEventListener("mouseup", async (e) => {
     if (
       e.target.classList.contains("coder_e_transform_tip") ||
       e.target.classList.contains("coder_e_transform_result")
@@ -15,6 +15,17 @@
     if (window.getSelection()?.toString().length === 0) {
       return;
     }
+
+    const r = await getStorage({
+      config: {
+        translate: true,
+      },
+    });
+
+    if (!r.config.translate) {
+      return;
+    }
+
     clearTimeout(time);
     time = setTimeout(() => {
       createTip();

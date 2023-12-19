@@ -1,5 +1,4 @@
 <template>
-  <el-button type="primary" @click="reset">重置数据</el-button>
   <ul class="config-list">
     <li>
       选中翻译
@@ -9,15 +8,27 @@
       单词弹幕
       <el-switch v-model="config.barrage" class="ml-2" @change="change" />
     </li>
+    <li>
+      复习提醒
+      <el-switch v-model="config.remind" class="ml-2" @change="change" />
+    </li>
+    <li>
+      弹幕开启时间
+      <el-time-select
+        v-model="config.barrageTime"
+        start="00:00"
+        step="00:15"
+        end="23:59"
+        placeholder="弹幕开始时间"
+        format="hh:mm"
+      />
+    </li>
   </ul>
 </template>
 <script setup lang="ts">
 import { getStorage } from "../utils/storage";
-import { reactive, onMounted } from "vue";
-const config = reactive({
-  translate: true,
-  barrage: true,
-});
+import { ref, onMounted } from "vue";
+const config = ref({});
 const storage = getStorage()();
 function reset() {
   chrome.storage.sync.clear(() => {
@@ -25,22 +36,23 @@ function reset() {
   });
 }
 
-function change() {
-  storage.set({
+async function change() {
+  await storage.set({
     config: {
-      ...config,
+      ...config.value,
     },
   });
 }
-onMounted(() => {
-  const store = storage.get({
+onMounted(async () => {
+  const store = await storage.get({
     config: {
       translate: true,
       barrage: true,
+      barrageTime: "09:00",
+      remind: true,
     },
   });
-  config.translate = store.config.translate;
-  config.barrage = store.config.barrage;
+  config.value = store.config;
 });
 </script>
 <style>

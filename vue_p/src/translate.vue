@@ -60,6 +60,7 @@
 <script setup lang="ts">
 import { Microphone, CirclePlus } from "@element-plus/icons-vue";
 import { getStorage } from "../utils/storage";
+import { getFutureDate } from "../utils/time";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import { API_URL } from "../../config/index";
@@ -120,6 +121,8 @@ async function addStore() {
       : result.value.translation[0],
     speakUrl: result.value.speakUrl,
     tSpeakUrl: result.value.tSpeakUrl,
+    learnTime: getFutureDate(1),
+    leranCount: 1,
   });
   await storage.set({
     [name]: list,

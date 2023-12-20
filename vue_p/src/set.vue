@@ -19,6 +19,7 @@
         start="00:00"
         step="00:15"
         end="23:59"
+        @change="change"
         placeholder="弹幕开始时间"
         format="hh:mm"
       />
@@ -30,6 +31,7 @@
         start="00:00"
         step="00:15"
         end="23:59"
+        @change="change"
         placeholder="弹幕开始时间"
         format="hh:mm"
       />

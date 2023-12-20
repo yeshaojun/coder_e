@@ -1,7 +1,7 @@
-window.onload = async function () {
+(document.onload = async () => {
   let timer = null;
   let checkTimer = null;
-  const danmuContainer = document.body;
+  let word_list = [];
   const danmuConfig = {
     speed: 20, // 弹幕速度，可以根据需求调整
   };
@@ -15,33 +15,25 @@ window.onload = async function () {
   });
 
   if (c.config.barrage) {
-    // checkTimer = setInterval(() => {
-    //   if (checkTime(c.config.barrageTime)) {
-    //     clearInterval(checkTimer);
-    //     start();
-    //   }
-    // }, 20000);
-    start();
+    checkTimer = setInterval(() => {
+      if (checkTime(c.config.barrageTime)) {
+        clearInterval(checkTimer);
+        start();
+      }
+    }, 20000);
   }
-  chrome.storage.onChanged.addListener(function (changes, namespace) {
-    console.log("changes", changes);
-    if (changes.config.newValue.barrage) {
-      start();
-    } else {
-      clearInterval(timer);
-    }
-  });
 
   async function start() {
     const data = await getStorage({
       [c.defaultStore]: [],
     });
-    const list = data[c.defaultStore];
+    word_list = data[c.defaultStore];
     let currentIndex = 0;
     let repeat = 2;
     timer = setInterval(() => {
-      if (currentIndex < list.length) {
-        addDanmu(list[currentIndex]);
+      if (currentIndex < word_list.length) {
+        addDanmu(word_list, currentIndex);
+        currentIndex++;
       } else {
         repeat--;
         currentIndex = 0;
@@ -53,28 +45,16 @@ window.onload = async function () {
     }, 4000);
   }
 
-  function checkTime(time) {
-    // 获取当前时间
-    var currentTime = new Date();
-
-    if (
-      currentTime.getHours() === parseInt(time.substring(0, 2)) &&
-      currentTime.getMinutes() === parseInt(time.substring(3, 5))
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function createDanmu(info) {
+  function createDanmu(obj, index) {
+    const info = obj[index];
     const danmu = document.createElement("div");
     danmu.className = "coder_e_barrage";
     danmu.innerHTML = `<div class="coder_e_query">${info.query}</div>
       <p class="coder_e_query_result">${info.translation}</p>
-      <span class="coder_e_query_mark_minus">不认识</span>
+      <span class="coder_e_query_mark_add" index="${index}">认识</span>
+      <span class="coder_e_query_mark_minus" index="${index}">不认识</span>
     `;
-
+    mark_word();
     // 鼠标移入暂停动画
     danmu.addEventListener("mouseenter", function () {
       danmu.style.animationPlayState = "paused";
@@ -87,20 +67,18 @@ window.onload = async function () {
       danmu.classList.remove("paused");
     });
 
-    danmuContainer.appendChild(danmu);
+    document.body.appendChild(danmu);
     // 计算纵向位置，确保分布相对平均
     danmu.style.top = `${Math.random() * (window.outerHeight - 100)}px`;
 
     return danmu;
   }
 
-  function addDanmu(text) {
-    const danmu = createDanmu(text);
-
+  function addDanmu(info, index) {
+    const danmu = createDanmu(info, index);
     danmu.style.animationDuration = `${
-      danmuContainer.clientWidth / danmuConfig.speed
+      document.body.clientWidth / danmuConfig.speed
     }s`;
-
     // 弹幕动画结束后移除弹幕元素
     danmu.addEventListener("animationiteration", function () {
       danmu.remove();
@@ -113,4 +91,46 @@ window.onload = async function () {
 
     return danmu;
   }
-};
+
+  function mark_word() {
+    document.querySelectorAll(".coder_e_query_mark_minus").forEach((_) => {
+      _?.addEventListener("click", (e) => {
+        let index = e.target.getAttribute("index");
+        const obj = word_list[index];
+        obj.mark = obj.mark - 1;
+        dealMark(obj);
+      });
+    });
+
+    document.querySelectorAll(".coder_e_query_mark_add").forEach((_) => {
+      _.addEventListener("click", (e) => {
+        let index = 0;
+        index = e.target.getAttribute("index");
+        const obj = word_list[index];
+        obj.mark = obj.mark + 1;
+        dealMark(obj);
+      });
+    });
+  }
+
+  function dealMark(obj) {
+    if (obj.mark < 0) {
+      obj.mark = 0;
+    }
+    if (obj.mark < 6) {
+      obj.learnTime = getFutureDate(CODER_E_MARK[obj.mark]);
+    }
+    setStorage({
+      [c.defaultStore]: word_list,
+    });
+  }
+
+  chrome.storage.onChanged.addListener(function (changes, namespace) {
+    if (!changes.config.newValue.barrage) {
+      clearInterval(timer);
+      clearInterval(checkTimer);
+    } else {
+      start();
+    }
+  });
+})();

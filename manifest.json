@@ -29,9 +29,9 @@
           "all_frames": false,
           "js": [
             "scripts/common.js",
-            "scripts/buddetjs.min.js",
             "scripts/content.js",
-            "scripts/barrage.js"
+            "scripts/barrage.js",
+            "scripts/review.js"
           ],
           "css": ["css/index.css"],
           "matches": ["<all_urls>"],

@@ -43,13 +43,15 @@
   cursor: pointer;
   animation: moveRight linear infinite;
   padding: 20px;
+  white-space: normal;
+  max-width: 300px;
 }
 
 .coder_e_barrage.paused {
     background-color: #f2f4fa;
 }
 
-.coder_e_query_mark_minus {
+.coder_e_query_mark_minus, .coder_e_review_minus {
     margin-top: 10px;
     background-color: #e57471;
     color: #fff;
@@ -57,6 +59,21 @@
     font-size: 14px;
     border-radius: 4px;
     display: none;
+    cursor: pointer;
+}
+
+.coder_e_query_mark_add, .coder_e_review_add {
+  margin-top: 10px;
+  background-color: #599ff7;
+  color: #fff;
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 4px;
+  display: none;
+  cursor: pointer;
+}
+.coder_e_review_add, .coder_e_review_minus {
+  display: inline-block;
 }
 
 .coder_e_query_result {
@@ -66,6 +83,9 @@
 }
 
 .coder_e_barrage.paused .coder_e_query_mark_minus {
+  display: inline-block;
+}
+.coder_e_barrage.paused .coder_e_query_mark_add {
   display: inline-block;
 }
 .coder_e_barrage.paused .coder_e_query_result  {
@@ -92,4 +112,61 @@
   display: inline-block;
   border-radius: 4px;
   text-align: center;
+}
+
+.coder_e_review_wrapper {
+  position: fixed;
+  width: 60%;
+  height: 60vh;
+  background-color: #f2f4fb;
+  padding: 10px;
+  z-index: 99;
+  top: 20vh;
+  left: 20%;
+  box-shadow: 8px 8px 20px 0 rgba(55,99,170,.1), -8px -8px 20px 0 #fff;
+}
+
+.coder_e_review_wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.coder_e_review_wrapper ul li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 10px;
+}
+.coder_e_review_title {
+  display: flex;
+  justify-content: space-between;
+  color: #599ff7;
+  align-items: center;
+}
+.coder_e_review_result {
+  font-size: 12px;
+  display: none;
+}
+
+.coder_e_review_wrapper .coder_e_query_mark_add, .coder_e_review_wrapper .coder_e_query_mark_minus {
+  display: inline-block;
+}
+
+.review_close {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.coder_e_review_play {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.coder_e_review_audio {
+  display: none;
+}
+.flex {
+  display: flex;
+  align-items: center;
 }

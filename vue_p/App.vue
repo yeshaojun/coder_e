@@ -35,9 +35,6 @@ onMounted(async () => {
   const store = await storage.get({
     store: [],
   });
-  // chrome.storage.sync.clear(() => {
-  //   console.log("clear");
-  // });
   if (store.store.length === 0) {
     await storage.set({
       store: [

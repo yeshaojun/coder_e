@@ -122,6 +122,7 @@ async function addStore() {
     speakUrl: result.value.speakUrl,
     tSpeakUrl: result.value.tSpeakUrl,
     learnTime: getFutureDate(1),
+    id: new Date().getTime() + Math.random(),
     leranCount: 1,
   });
   await storage.set({

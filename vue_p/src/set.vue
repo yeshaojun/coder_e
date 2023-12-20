@@ -23,6 +23,17 @@
         format="hh:mm"
       />
     </li>
+    <li>
+      开启复习时间
+      <el-time-select
+        v-model="config.remindTime"
+        start="00:00"
+        step="00:15"
+        end="23:59"
+        placeholder="弹幕开始时间"
+        format="hh:mm"
+      />
+    </li>
   </ul>
 </template>
 <script setup lang="ts">
@@ -30,11 +41,6 @@ import { getStorage } from "../utils/storage";
 import { ref, onMounted } from "vue";
 const config = ref({});
 const storage = getStorage()();
-function reset() {
-  chrome.storage.sync.clear(() => {
-    console.log("clear");
-  });
-}
 
 async function change() {
   await storage.set({
@@ -49,6 +55,7 @@ onMounted(async () => {
       translate: true,
       barrage: true,
       barrageTime: "09:00",
+      remindTime: "11:00",
       remind: true,
     },
   });

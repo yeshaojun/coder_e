@@ -15,12 +15,13 @@
   });
 
   if (c.config.barrage) {
-    checkTimer = setInterval(() => {
-      if (checkTime(c.config.barrageTime)) {
-        clearInterval(checkTimer);
-        start();
-      }
-    }, 20000);
+    // checkTimer = setInterval(() => {
+    //   if (checkTime(c.config.barrageTime)) {
+    //     clearInterval(checkTimer);
+    //     start();
+    //   }
+    // }, 20000);
+    start();
   }
 
   async function start() {
@@ -41,6 +42,7 @@
       // document.body.appendChild(html);
       if (repeat === 0) {
         clearInterval(timer);
+        timer = null;
       }
     }, 4000);
   }
@@ -69,7 +71,7 @@
 
     document.body.appendChild(danmu);
     // 计算纵向位置，确保分布相对平均
-    danmu.style.top = `${Math.random() * (window.outerHeight - 100)}px`;
+    danmu.style.top = `${Math.random() * (window.outerHeight - 200)}px`;
 
     return danmu;
   }
@@ -97,7 +99,8 @@
       _?.addEventListener("click", (e) => {
         let index = e.target.getAttribute("index");
         const obj = word_list[index];
-        obj.mark = obj.mark - 1;
+        obj.leranCount = obj.leranCount - 1;
+        console.log("111", obj, index);
         dealMark(obj);
       });
     });
@@ -107,17 +110,17 @@
         let index = 0;
         index = e.target.getAttribute("index");
         const obj = word_list[index];
-        obj.mark = obj.mark + 1;
+        obj.leranCount = obj.leranCount + 1;
         dealMark(obj);
       });
     });
   }
 
   function dealMark(obj) {
-    if (obj.mark < 0) {
-      obj.mark = 0;
+    if (obj.leranCount < 0) {
+      obj.leranCount = 0;
     }
-    if (obj.mark < 6) {
+    if (obj.leranCount < 6) {
       obj.learnTime = getFutureDate(CODER_E_MARK[obj.mark]);
     }
     setStorage({
@@ -126,11 +129,18 @@
   }
 
   chrome.storage.onChanged.addListener(function (changes, namespace) {
+    console.log("222", changes.config);
+    if (changes.config.newValue.barrage === changes.config.oldValue.barrage) {
+      return;
+    }
     if (!changes.config.newValue.barrage) {
       clearInterval(timer);
+      timer = null;
       clearInterval(checkTimer);
     } else {
-      start();
+      if (!timer) {
+        start();
+      }
     }
   });
 })();

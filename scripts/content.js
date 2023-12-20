@@ -98,6 +98,7 @@
       result.speakUrl
     }" controls>
   `;
+    // 这里有问题
     addListenerhandle(result);
   }
 
@@ -126,6 +127,9 @@
             : result.translation[0],
           speakUrl: result.speakUrl,
           tSpeakUrl: result.tSpeakUrl,
+          learnTime: getFutureDate(1),
+          id: new Date().getTime() + Math.random(),
+          leranCount: 1,
         });
         await setStorage({
           [defaultStore]: list,

@@ -1,5 +1,5 @@
 .coder_e_transform_tip {
-  position: absolute;
+  position: fixed;
   display: none;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
@@ -10,7 +10,7 @@
 }
 
 .coder_e_transform_result {
-  position: absolute;
+  position: fixed;
   display: none;
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -26,6 +26,8 @@
 
 .coder_e_transform_result_audio {
   display: none;
+  cursor: pointer;
+
 }
 .coder_e_transform_result-content {
   margin-top: 15px;
@@ -33,6 +35,7 @@
 }
 .coder_e_transform_result_play {
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .coder_e_barrage {

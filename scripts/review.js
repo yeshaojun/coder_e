@@ -3,6 +3,7 @@
   const c = await getStorage({
     config: {
       remind: true,
+      remindTime: "11:00",
     },
     defaultStore: "coder_e_1",
   });
@@ -11,6 +12,7 @@
   let word_list = [];
 
   if (c.config.remind) {
+    console.log("cccc", c);
     checkTimer = setInterval(() => {
       if (checkTime(c.config.remindTime)) {
         clearInterval(checkTimer);
@@ -25,9 +27,8 @@
     });
     word_list = r[c.defaultStore];
     list = r[c.defaultStore].filter(
-      (_) => _.learnTime === formatDate(new Date()) && _.mark < 6
+      (_) => _.learnTime === formatDate(new Date()) && _.leranCount < 6
     );
-    // list = r[c.defaultStore];
     const div = document.createElement("div");
     div.classList.add("coder_e_review_wrapper");
     let html = "";
@@ -56,11 +57,15 @@
           <ul>${html}</ul>
           <audio src="" controls class="coder_e_review_audio"></audio>
         `;
-      document.body.appendChild(div);
-      document.querySelector(".review_close")?.addEventListener("click", () => {
-        div.remove();
-      });
+    } else {
+      div.innerHTML = ` <div class="review_close">
+      <svg t="1703040645856" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2895" width="18" height="17"><path d="M557.312 513.248l265.28-263.904c12.544-12.48 12.608-32.704 0.128-45.248-12.512-12.576-32.704-12.608-45.248-0.128l-265.344 263.936-263.04-263.84C236.64 191.584 216.384 191.52 203.84 204 191.328 216.48 191.296 236.736 203.776 249.28l262.976 263.776L201.6 776.8c-12.544 12.48-12.608 32.704-0.128 45.248 6.24 6.272 14.464 9.44 22.688 9.44 8.16 0 16.32-3.104 22.56-9.312l265.216-263.808 265.44 266.24c6.24 6.272 14.432 9.408 22.656 9.408 8.192 0 16.352-3.136 22.592-9.344 12.512-12.48 12.544-32.704 0.064-45.248L557.312 513.248z" p-id="2896"></path></svg>
+    </div><span>今天暂时没有需要复习的单词哦</span>`;
     }
+    document.body.appendChild(div);
+    document.querySelector(".review_close")?.addEventListener("click", () => {
+      div.remove();
+    });
     mark();
     play();
   }
@@ -75,7 +80,7 @@
           "inline-block";
         index = e.target.getAttribute("index");
         const obj = word_list[index];
-        obj.mark = obj.mark + 1;
+        obj.leranCount = obj.leranCount + 1;
         dealMark(obj);
       });
     });
@@ -89,18 +94,18 @@
           "inline-block";
         index = e.target.getAttribute("index");
         const obj = word_list[index];
-        obj.mark = obj.mark + 1;
+        obj.leranCount = obj.leranCount + 1;
         dealMark(obj);
       });
     });
   }
 
   function dealMark(obj) {
-    if (obj.mark < 0) {
-      obj.mark = 0;
+    if (obj.leranCount < 0) {
+      obj.leranCount = 0;
     }
-    if (obj.mark < 6) {
-      obj.learnTime = getFutureDate(CODER_E_MARK[obj.mark]);
+    if (obj.leranCount < 6) {
+      obj.learnTime = getFutureDate(CODER_E_MARK[obj.leranCount]);
     }
     setStorage({
       [c.defaultStore]: word_list,
@@ -118,6 +123,9 @@
   }
 
   chrome.storage.onChanged.addListener(function (changes, namespace) {
+    if (changes.config.newValue.remind === changes.config.oldValue.remind) {
+      return;
+    }
     if (!changes.config.newValue.remind) {
       const o = document.querySelector(".coder_e_review_wrapper");
       o && o.remove();

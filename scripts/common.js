@@ -47,6 +47,23 @@ function checkTime(time) {
   }
 }
 
+function showAnimation(e) {
+  const animation = document.querySelector(".coder_e_clickAnimation");
+  animation.style.display = "block";
+  animation.style.left = e.clientX + "px";
+  animation.style.top = e.clientY + "px";
+  // 触发动画效果
+  setTimeout(function () {
+    animation.style.transform = "translateY(-50px)";
+  }, 0);
+
+  // 1秒后隐藏动画并移除副本
+  setTimeout(function () {
+    animation.style.display = "none";
+    animation.style.transform = "translateY(0px)";
+  }, 1000);
+}
+
 const CODER_E_MARK = {
   0: 1,
   1: 2,

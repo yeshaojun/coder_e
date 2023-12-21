@@ -10,7 +10,7 @@ import { reactive } from "vue";
 const list = reactive([
   {
     name: "b站自然拼读法",
-    url: "",
+    url: "https://www.bilibili.com/video/BV1T541157Ut/?p=4&spm_id_from=333.880.my_history.page.click",
   },
   {
     name: "雪莉老师课程",

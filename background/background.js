@@ -5,9 +5,7 @@ chrome.runtime.onMessage.addListener(
       .then((response) => response.json())
       .then((json) => {
         sendResponse(json);
-        // sendResponse(json);
       });
-    // 假设已经处理完了，返回结果
     return true;
   }
 );

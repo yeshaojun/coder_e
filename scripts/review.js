@@ -25,7 +25,6 @@
       [c.defaultStore]: [],
     });
     word_list = r[c.defaultStore];
-    console.log("word_list", word_list);
     list = r[c.defaultStore].filter(
       (_) =>
         _.learnTime === formatDate(new Date(getFutureDate(1))) &&
@@ -86,7 +85,6 @@
         );
         e.target.parentElement.parentElement.nextElementSibling.style.display =
           "inline-block";
-        console.log("1111", e.target.nextElementSibling);
         e.target.previousElementSibling.style.display = "none";
         e.target.style.display = "none";
         const obj = word_list[index];

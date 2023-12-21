@@ -187,3 +187,7 @@
   transition: transform 1s ease-in-out;
   z-index: 999;
 }
+
+.coder_e_transform_result_add {
+  cursor: pointer;
+}

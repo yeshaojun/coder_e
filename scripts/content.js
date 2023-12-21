@@ -9,7 +9,6 @@
       e.target.classList.contains("coder_e_transform_tip") ||
       e.target.classList.contains("coder_e_transform_result")
     ) {
-      console.log("huhuh");
       return;
     }
     if (window.getSelection()?.toString().length === 0) {
@@ -39,7 +38,6 @@
 
   function createTip() {
     const { rect: obj, text } = getTextInfo();
-    console.log("createTip", text);
     if (!text) {
       return;
     }
@@ -53,7 +51,6 @@
     }
     left = obj.left;
     top = obj.top;
-    console.log("left", left, top);
     element.style.display = "block";
     element.style.left = left + obj?.width + "px";
     element.style.top = top - 30 + "px";
@@ -70,7 +67,9 @@
   }
 
   function showResult(result) {
-    console.log("result", result);
+    if (!result) {
+      return;
+    }
     if (!showel) {
       showel = document.createElement("div");
       showel.classList.add("coder_e_transform_result");
@@ -119,7 +118,6 @@
           [defaultStore]: [],
         });
         const list = r[defaultStore];
-        console.log("r", r, list, defaultStore);
         list.unshift({
           query: result.query,
           translation: result?.basic
@@ -131,6 +129,8 @@
           id: new Date().getTime() + Math.random(),
           leranCount: 1,
         });
+        document.querySelector(".coder_e_transform_result").style.display =
+          "none";
         await setStorage({
           [defaultStore]: list,
         });

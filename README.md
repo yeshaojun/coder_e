@@ -4,6 +4,10 @@ coder english 程序员英语学习插件
 
 支持中文转英文，支持句子。（主要本人 ai 绘画经常要中文转英文）
 
+# 插件使用
+
+克隆代码或者直接下载 zip 包，解压到浏览器扩展程序目录，打开浏览器扩展程序页面，加载已解压的扩展程序，选择解压的目录
+
 # 主要功能
 
 1. 查词（支持句子）翻译，选中文本，自动出现翻译图标（点击转图标），仅支持中英文（可加入生词本）
@@ -16,8 +20,30 @@ coder english 程序员英语学习插件
    复习的单词为字典中的单词，根据权重计算
 
 4. 配置修改
-5. 英语学习资源
+5. 英语学习资源(点个 start 呀老铁们)
    资源为某宝付费购买,请务必先保存到自己云盘。
+
+   ```
+   [
+      {
+      name: "b站自然拼读法",
+      url: "https://www.bilibili.com/video/BV1T541157Ut/?p=4&spm_id_from=333.880.my_history.page.click",
+      },
+      {
+      name: "雪莉老师课程",
+      url: "https://pan.baidu.com/s/1GY9Efnn7OJOvhM-EITjaAg?pwd=e59m",
+      },
+      {
+      name: "杨家成英语十合一",
+      url: "https://pan.baidu.com/s/1ssSCEXERzerUS6lwxAbPBQ?pwd=u2sg",
+      },
+      {
+      name: "sam老师全集",
+      url: "https://pan.baidu.com/s/1W08nEA3hra68A_HvPUEDFw?pwd=tteh",
+      },
+   ]
+
+   ```
 
 # 单词权重（可在 scripts/common 中最修改）
 

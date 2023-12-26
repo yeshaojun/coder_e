@@ -23,15 +23,17 @@ import { ref, onMounted } from "vue";
 import { getStorage } from "./utils/storage.js";
 const active = ref("translate");
 const storeDom = ref();
-
-function changeTabs(name) {
+const storage = getStorage()();
+async function changeTabs(name) {
   if (name === "store") {
-    storeDom.value && storeDom.value.findWordList("", true);
+    const result = await storage.get({
+      defaultStore: "coder_e_1",
+    });
+    storeDom.value && storeDom.value.findWordList(result.defaultStore, true);
   }
 }
 
 onMounted(async () => {
-  const storage = getStorage()();
   const store = await storage.get({
     store: [],
   });

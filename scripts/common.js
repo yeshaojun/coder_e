@@ -7,6 +7,7 @@ async function getStorage(name) {
 }
 
 async function setStorage(info) {
+  console.log("set", info);
   return new Promise((resolve) => {
     chrome.storage.sync.set(info, () => {
       resolve(true);

@@ -109,6 +109,7 @@ async function addStore() {
   const r = await storage.get({
     defaultStore: "coder_e_1",
   });
+  console.log("r", r);
   const name = r.defaultStore;
   const s = await storage.get({
     [name]: [],

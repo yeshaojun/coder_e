@@ -10,7 +10,7 @@
     <div class="mt-2 mb-2">
       <el-space>
         默认
-        <el-select v-model="defaultStore" size="small">
+        <el-select v-model="defaultStore" size="small" @change="changeDefault">
           <el-option
             v-for="item in storeList"
             :key="item.key"
@@ -167,12 +167,21 @@ async function save() {
   }
 }
 
+function changeDefault() {
+  storage.set({
+    defaultStore: defaultStore.value,
+  });
+}
+
 function opt(type) {
   optType.value = type;
   dialogVisible.value = true;
 }
 
 async function findWordList(name, refush = false) {
+  if (!name) {
+    return;
+  }
   if (!(name in wordList.value) || refush) {
     if (refush) {
       console.log("defaultStore.value", defaultStore.value);
@@ -202,8 +211,9 @@ function play(url) {
 }
 
 function deleteWord(key, index) {
-  const list = wordList.value[key];
+  const list = JSON.parse(JSON.stringify(wordList.value[key]));
   list.splice(index, 1);
+  wordList.value[key] = list;
   storage.set({
     [key]: list,
   });

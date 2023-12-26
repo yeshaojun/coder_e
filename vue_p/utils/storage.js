@@ -9,6 +9,7 @@ class Storage {
 
   set(info) {
     return new Promise((resolve) => {
+      console.log("set popup", info);
       chrome.storage.sync.set(info, () => {
         console.log("set success");
         resolve(true);

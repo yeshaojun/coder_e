@@ -1,4 +1,5 @@
 <template>
+  <el-button type="primary" size="small" @click="reset">重置数据</el-button>
   <ul class="config-list">
     <li>
       选中翻译
@@ -51,6 +52,12 @@ async function change() {
     },
   });
 }
+
+function reset() {
+  chrome.storage.sync.clear();
+  location.reload();
+}
+
 onMounted(async () => {
   const store = await storage.get({
     config: {

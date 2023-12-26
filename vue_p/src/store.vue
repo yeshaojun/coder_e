@@ -2,7 +2,7 @@
   <div class="content">
     <div class="footer">
       <el-space>
-        <el-button size="small">导出</el-button>
+        <el-button size="small" @click="exportStore">导出</el-button>
         <el-button size="small" @click="opt('create')">新建</el-button>
         <el-button size="small" @click="opt('remove')">删除</el-button>
       </el-space>
@@ -207,6 +207,25 @@ function deleteWord(key, index) {
   storage.set({
     [key]: list,
   });
+}
+
+async function exportStore() {
+  let arr = [];
+  for (let i = 0; i < storeList.value.length; i++) {
+    const list = await storage.get({
+      [storeList.value[i].key]: [],
+    });
+    arr = arr.concat(list);
+  }
+  const blob = new Blob([JSON.stringify(arr)], {
+    type: "text/plain;charset=utf-8",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "store.json";
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 onMounted(async () => {

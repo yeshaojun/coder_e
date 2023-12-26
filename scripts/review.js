@@ -20,15 +20,25 @@
     }, 20000);
   }
 
+  function isTodayOrEarlier(inputDate) {
+    // 将输入日期字符串转换为日期对象
+    var inputDateTime = new Date(inputDate + "T00:00:00");
+
+    // 获取当前日期
+    var currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // 将当前日期的时间部分设置为零
+
+    // 比较日期部分是否等于或小于当前日期
+    return inputDateTime <= currentDate;
+  }
+
   async function open() {
     const r = await getStorage({
       [c.defaultStore]: [],
     });
     word_list = r[c.defaultStore];
     list = r[c.defaultStore].filter(
-      (_) =>
-        _.learnTime === formatDate(new Date(getFutureDate(1))) &&
-        _.leranCount < 6
+      (_) => isTodayOrEarlier(_.learnTime) && _.leranCount < 6
     );
     const div = document.createElement("div");
     div.classList.add("coder_e_review_wrapper");

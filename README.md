@@ -70,6 +70,14 @@ learn >5 不提醒
 
 除了 vue，没有使用任何三方库，如果需要修改，可参考文章。
 
+# 如何替换成自己的 api
+
+插件只在两处地方做了接口请求
+
+1. 单词翻译（可在 vue_p/src/translate 下 handle 方法中，修改 fetch 方法即可，修改完之后记得 build 一下）
+
+2. 选中单词翻译（可在 background/background.js 中直接修改 fetch 方法即可）
+
 # 问题反馈
 
 个人精力有限，插件可能还会有一些问题，如果大家在使用过程中遇到问题，可提 Issues。

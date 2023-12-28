@@ -81,10 +81,18 @@
     </div><p style="text-align:center">今天暂时没有需要复习的单词哦</p>`;
     }
     document.body.appendChild(div);
-    document.querySelector(".review_close")?.addEventListener("click", () => {
-      console.log("remove");
-      div.remove();
+    // document.querySelector(".review_close")?.addEventListener("click", (e) => {
+    //   console.log("remove", e.target);
+    //   div.remove();
+    // });
+
+    div.addEventListener("click", (e) => {
+      console.log("e", e, e.target);
+      if (e.target.nodeName === "svg") {
+        div.remove();
+      }
     });
+
     mark();
     play();
   }

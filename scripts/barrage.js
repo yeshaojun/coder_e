@@ -2,6 +2,7 @@
   let timer = null;
   let checkTimer = null;
   let word_list = [];
+  let count = 5;
   const danmuConfig = {
     speed: 20, // 弹幕速度，可以根据需求调整
   };
@@ -18,7 +19,11 @@
     checkTimer = setInterval(() => {
       if (checkTime(c.config.barrageTime)) {
         clearInterval(checkTimer);
-        start();
+        for (let i = 0; i < count; i--) {
+          setTimeout(() => {
+            start();
+          }, i * 1800000);
+        }
       }
     }, 20000);
   }

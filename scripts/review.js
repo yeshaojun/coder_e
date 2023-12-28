@@ -15,7 +15,8 @@
     checkTimer = setInterval(() => {
       if (checkTime(c.config.remindTime)) {
         clearInterval(checkTimer);
-        open();
+        // open();
+        chrome.runtime.sendMessage({ message: "showReview" });
       }
     }, 20000);
   }
@@ -81,6 +82,7 @@
     }
     document.body.appendChild(div);
     document.querySelector(".review_close")?.addEventListener("click", () => {
+      console.log("remove");
       div.remove();
     });
     mark();
@@ -155,6 +157,21 @@
       const o = document.querySelector(".coder_e_review_wrapper");
       o && o.remove();
     } else {
+      // open();
+      chrome.runtime.sendMessage({ message: "showReview" });
+    }
+  });
+
+  // content.js
+
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    console.log("request", request.message);
+    if (request.message === "displayPopup") {
+      // 在这里添加显示弹窗的逻辑
       open();
     }
   });

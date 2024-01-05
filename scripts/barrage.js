@@ -16,16 +16,16 @@
   });
 
   if (c.config.barrage) {
-    checkTimer = setInterval(() => {
-      if (checkTime(c.config.barrageTime)) {
-        clearInterval(checkTimer);
-        for (let i = 0; i < count; i--) {
+    if (checkTimer(c.config.barrageTime)) {
+      checkTimer = setInterval(() => {
+        for (let i = 0; i < count; i++) {
           setTimeout(() => {
             start();
           }, i * 1800000);
         }
-      }
-    }, 20000);
+        clearInterval(checkTimer);
+      }, 20000);
+    }
   }
 
   async function start() {

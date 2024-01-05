@@ -17,24 +17,22 @@
       弹幕开启时间
       <el-time-select
         v-model="config.barrageTime"
-        start="00:00"
+        start="05:00"
         step="00:15"
-        end="23:59"
+        end="23:00"
         @change="change"
         placeholder="弹幕开始时间"
-        format="hh:mm"
       />
     </li>
     <li>
       开启复习时间
       <el-time-select
         v-model="config.remindTime"
-        start="00:00"
+        start="05:00"
         step="00:15"
-        end="23:59"
+        end="23:00"
         @change="change"
         placeholder="弹幕开始时间"
-        format="hh:mm"
       />
     </li>
   </ul>

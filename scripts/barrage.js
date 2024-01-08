@@ -16,7 +16,7 @@
   });
 
   if (c.config.barrage) {
-    if (checkTimer(c.config.barrageTime)) {
+    if (checkTime(c.config.barrageTime)) {
       checkTimer = setInterval(() => {
         for (let i = 0; i < count; i++) {
           setTimeout(() => {

@@ -1,7 +1,7 @@
 class Storage {
   get(name) {
     return new Promise((resolve) => {
-      chrome.storage.sync.get(name, (result) => {
+      chrome.storage.local.get(name, (result) => {
         resolve(result);
       });
     });
@@ -10,7 +10,7 @@ class Storage {
   set(info) {
     return new Promise((resolve) => {
       console.log("set popup", info);
-      chrome.storage.sync.set(info, () => {
+      chrome.storage.local.set(info, () => {
         console.log("set success");
         resolve(true);
       });
@@ -19,7 +19,7 @@ class Storage {
 
   remove(info) {
     return new Promise((resolve) => {
-      chrome.storage.sync.remove(info, () => {
+      chrome.storage.local.remove(info, () => {
         console.log("remove success");
         resolve(true);
       });

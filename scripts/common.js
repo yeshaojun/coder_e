@@ -1,6 +1,6 @@
 async function getStorage(name) {
   return new Promise((resolve) => {
-    chrome.storage.sync.get(name, (result) => {
+    chrome.storage.local.get(name, (result) => {
       resolve(result);
     });
   });
@@ -9,7 +9,8 @@ async function getStorage(name) {
 async function setStorage(info) {
   console.log("set", info);
   return new Promise((resolve) => {
-    chrome.storage.sync.set(info, () => {
+    chrome.storage.local.set(info, () => {
+      console.log("success");
       resolve(true);
     });
   });

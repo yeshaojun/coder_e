@@ -34,6 +34,11 @@
   }
 
   async function open() {
+    if (document.querySelector(".coder_e_review_wrapper")) {
+      document.querySelector(".coder_e_review_wrapper").style.dislay = "block";
+      return;
+    }
+
     const r = await getStorage({
       [c.defaultStore]: [],
     });
@@ -88,7 +93,7 @@
 
     div.addEventListener("click", (e) => {
       console.log("e", e, e.target);
-      if (e.target.nodeName === "svg") {
+      if (e.target.nodeName === "svg" || e.target.nodeName === "path") {
         div.remove();
       }
     });

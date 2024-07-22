@@ -1,10 +1,10 @@
 chrome.runtime.onMessage.addListener(
   ({ type, payload }, sender, sendResponse) => {
     console.log("type", type, payload);
-    fetch("https://api.yeshaojun.com/v1/translate/text?text=" + payload)
+    fetch("http://api.yeshaojun.com/english/translate?text=" + payload)
       .then((response) => response.json())
       .then((json) => {
-        sendResponse(json);
+        sendResponse(json.data);
       });
     return true;
   }

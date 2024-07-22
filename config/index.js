@@ -1,2 +1,2 @@
-const API_URL = "https://api.yeshaojun.com/v1/translate/text";
+const API_URL = "http://api.yeshaojun.com/english/translate";
 export { API_URL };

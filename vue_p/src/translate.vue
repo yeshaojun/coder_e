@@ -85,7 +85,8 @@ function handle() {
   fetch(API_URL + "?text=" + textarea.value)
     .then((response) => response.json())
     .then((json) => {
-      result.value = json as any;
+      console.log("json", json);
+      result.value = json.data as any;
       loading.value = false;
     });
 }
